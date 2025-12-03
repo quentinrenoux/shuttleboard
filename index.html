@@ -83,8 +83,8 @@
       }
 
       html {
-        /* base typographique dynamique : tout le texte grossit en gardant les proportions */
-        font-size: clamp(15px, 1.1vw + 1rem, 19px);
+        /* Texte plus petit sur mobile, plus grand sur grand écran */
+        font-size: clamp(14px, 1.1vw + 10px, 20px);
       }
 
       html,
@@ -106,7 +106,8 @@
         justify-content: center;
         padding: 16px;
         overflow-x: hidden;
-        overflow-y: auto; /* permet de scroller si besoin sur les très petits écrans */
+        overflow-y: auto;
+        word-wrap: break-word;
       }
 
       :root {
@@ -132,12 +133,11 @@
         background-size: 200% 200%;
 
         filter: blur(40px);
-        transform: scale(1.1); /* déborde un peu pour éviter les bords nets */
+        transform: scale(1.1);
 
         animation: lavaMove 20s ease-in-out infinite alternate;
       }
 
-      /* animation type lampe à lave */
       @keyframes lavaMove {
         0% {
           background-position: 0% 0%, 100% 0%, 50% 100%;
@@ -151,7 +151,7 @@
       }
 
       .page {
-        max-width: 80%;
+        max-width: 720px;
         width: 100%;
         text-align: center;
         display: flex;
@@ -194,7 +194,7 @@
       }
 
       h1 {
-        font-size: clamp(1.8rem, 2.5vw + 1rem, 2.6rem);
+        font-size: clamp(1.7rem, 2.2vw + 1rem, 2.5rem);
         margin-bottom: 4px;
         font-weight: 600;
         font-family: "Strawford Bold", system-ui, -apple-system,
@@ -202,7 +202,7 @@
       }
 
       h2 {
-        font-size: clamp(1rem, 1.5vw + 0.8rem, 1.3rem);
+        font-size: clamp(1rem, 1.3vw + 0.8rem, 1.3rem);
         margin-bottom: 8px;
         font-weight: 400;
         opacity: 0.95;
@@ -252,11 +252,36 @@
       .intro-line {
         display: inline-block;
         max-width: 100%;
+        text-align: center;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        /* réserve un peu de hauteur pour limiter les sauts brusques entre textes plus longs/courts */
+        min-height: 3em;
+      }
+
+      #intro-prefix,
+      #intro-suffix {
+        display: inline;
       }
 
       #typewriter {
+        display: inline;
         font-weight: 600;
-        white-space: nowrap;
+        /* on laisse le navigateur gérer les retours à la ligne naturels */
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.7rem;
+        }
+        h2 {
+          font-size: 1.05rem;
+        }
+        p {
+          font-size: 0.9rem;
+        }
       }
     </style>
   </head>
@@ -300,7 +325,8 @@
           <span id="intro-prefix"
             >Shuttleboard.io est une future plateforme dédiée aux
           </span>
-          <span id="typewriter"></span><span id="intro-suffix">&nbsp;:</span>
+          <span id="typewriter"></span
+          ><span id="intro-suffix"> du badminton :</span>
         </p>
 
         <ul id="features">
@@ -338,7 +364,7 @@
             "clubs universitaires",
             "associations sportives",
             "clubs de badminton",
-            "maisons de la jeunesse et de la culture",
+            "maisons de la jeunesse et de la culture (MJC)",
             "centres socioculturels",
             "collectivités locales",
             "entreprises qui organisent des tournois internes",
@@ -796,7 +822,7 @@
       const titleEl = document.getElementById("title");
       const subtitleEl = document.getElementById("subtitle");
       const introPrefixEl = document.getElementById("intro-prefix");
-
+      const introSuffixEl = document.getElementById("intro-suffix");
       const typewriterEl = document.getElementById("typewriter");
       const featuresEl = document.getElementById("features");
       const ctaEl = document.getElementById("cta");
@@ -855,6 +881,16 @@
         typewriterTimeoutId = setTimeout(typewriterLoop, 400);
       }
 
+      function setLangInUrl(lang) {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("hl", lang);
+          window.history.replaceState({}, "", url);
+        } catch (e) {
+          // ignore URL API errors
+        }
+      }
+
       function applyTranslations(lang) {
         currentLang = lang;
         const t = translations[lang] || translations.fr;
@@ -864,6 +900,7 @@
         titleEl.textContent = t.title;
         subtitleEl.textContent = t.subtitle;
         introPrefixEl.textContent = t.introPrefix || "";
+        introSuffixEl.textContent = t.introSuffix || "";
         ctaEl.textContent = t.cta;
         footerEl.textContent = t.footer;
 
@@ -877,20 +914,36 @@
 
         // restart typewriter with new language
         resetTypewriter();
+        setLangInUrl(lang);
       }
 
-      // Auto language from browser if available
-      (function initLang() {
-        const browserLang = (navigator.language || "fr")
-          .slice(0, 2)
-          .toLowerCase();
-        if (translations[browserLang]) {
-          langSelect.value = browserLang;
+      function initLangFromUrlOrBrowser() {
+        const search = window.location.search || "";
+        const params = new URLSearchParams(search);
+        const hl = params.get("hl");
+
+        let initialLang = "fr";
+
+        if (hl) {
+          const code = hl.slice(0, 2).toLowerCase();
+          if (translations[code]) {
+            initialLang = code;
+          }
         } else {
-          langSelect.value = "fr";
+          const browserLang = (navigator.language || "fr")
+            .slice(0, 2)
+            .toLowerCase();
+          if (translations[browserLang]) {
+            initialLang = browserLang;
+          }
         }
-        applyTranslations(langSelect.value);
-      })();
+
+        langSelect.value = initialLang;
+        applyTranslations(initialLang);
+      }
+
+      // Init
+      initLangFromUrlOrBrowser();
 
       langSelect.addEventListener("change", () => {
         applyTranslations(langSelect.value);
