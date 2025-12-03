@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shuttleboard.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Font: Strawford (place files in ./fonts/) -->
+  <style>
+    @font-face {
+      font-family: "Strawford";
+      src: url("./fonts/wotfard-regular-webfont.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #4834d4;
+      color: #ffffff;
+      font-family: "Strawford", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .page {
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .lang-switcher {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 24px;
+    }
+
+    .lang-switcher select {
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 999px;
+      color: #ffffff;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .lang-switcher select option {
+      color: #000000;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw + 1rem, 3rem);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: clamp(1.1rem, 1.3vw + 0.9rem, 1.4rem);
+      margin-bottom: 20px;
+      font-weight: 400;
+      opacity: 0.95;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    ul {
+      list-style: none;
+      margin: 12px 0 16px;
+    }
+
+    ul li::before {
+      content: "• ";
+      margin-right: 4px;
+    }
+
+    .cta {
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .email {
+      font-family: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      color: #ffffff;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.6);
+    }
+
+    .email:hover {
+      border-bottom-style: solid;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="lang-switcher">
+      <label for="lang" style="display:none;">Langue</label>
+      <select id="lang">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+        <option value="da">Dansk</option>
+        <option value="zh">中文</option>
+        <option value="id">Bahasa Indonesia</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="ko">한국어</option>
+        <option value="ja">日本語</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ta">தமிழ்</option>
+      </select>
+    </div>
+
+    <main>
+      <h1 id="title">Shuttleboard.io arrive bientôt.</h1>
+      <h2 id="subtitle">
+        Organiser, arbitrer et suivre vos matchs de badminton n’a jamais été aussi simple.
+      </h2>
+
+      <p id="intro">
+        Shuttleboard.io est une future plateforme dédiée aux clubs et aux organisateurs de tournois :
+      </p>
+
+      <ul id="features">
+        <li data-i="0">création et gestion de tournois,</li>
+        <li data-i="1">suivi des matchs en temps réel,</li>
+        <li data-i="2">expérience fluide pour joueurs, arbitres et organisateurs.</li>
+      </ul>
+
+      <p class="cta" id="cta">
+        Vous voulez être informé du lancement ?
+      </p>
+      <p>
+        <a class="email" id="emailLink" href="mailto:hello@shuttleboard.io">
+          hello@shuttleboard.io
+        </a>
+      </p>
+
+      <p class="footer" id="footer">
+        Ce nom de domaine est réservé pour le projet Shuttleboard.io.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    const translations = {
+      fr: {
+        title: "Shuttleboard.io arrive bientôt.",
+        subtitle:
+          "Organiser, arbitrer et suivre vos matchs de badminton n’a jamais été aussi simple.",
+        intro:
+          "Shuttleboard.io est une future plateforme dédiée aux clubs et aux organisateurs de tournois :",
+        features: [
+          "création et gestion de tournois,",
+          "suivi des matchs en temps réel,",
+          "expérience fluide pour joueurs, arbitres et organisateurs."
+        ],
+        cta: "Vous voulez être informé du lancement ?",
+        footer: "Ce nom de domaine est réservé pour le projet Shuttleboard.io."
+      },
+      en: {
+        title: "Shuttleboard.io is coming soon.",
+        subtitle:
+          "Organizing, refereeing, and tracking your badminton matches has never been easier.",
+        intro:
+          "Shuttleboard.io is a forthcoming platform for clubs and tournament organizers:",
+        features: [
+          "create and manage tournaments,",
+          "follow matches in real time,",
+          "offer a smooth experience for players, referees, and organizers."
+        ],
+        cta: "Want to be notified when we launch?",
+        footer: "This domain name is reserved for the Shuttleboard.io project."
+      },
+      de: {
+        title: "Shuttleboard.io kommt bald.",
+        subtitle:
+          "Badminton-Spiele zu organisieren, zu leiten und zu verfolgen war noch nie so einfach.",
+        intro:
+          "Shuttleboard.io ist eine kommende Plattform für Vereine und Turnierveranstalter:",
+        features: [
+          "Erstellung und Verwaltung von Turnieren,",
+          "Live-Verfolgung der Spiele,",
+          "ein reibungsloses Erlebnis für Spieler, Schiedsrichter und Organisatoren."
+        ],
+        cta: "Möchten Sie über den Start informiert werden?",
+        footer: "Diese Domain ist für das Projekt Shuttleboard.io reserviert."
+      },
+      es: {
+        title: "Shuttleboard.io llegará muy pronto.",
+        subtitle:
+          "Organizar, arbitrar y seguir tus partidos de bádminton nunca ha sido tan fácil.",
+        intro:
+          "Shuttleboard.io será una plataforma para clubes y organizadores de torneos:",
+        features: [
+          "creación y gestión de torneos,",
+          "seguimiento de partidos en tiempo real,",
+          "una experiencia fluida para jugadores, árbitros y organizadores."
+        ],
+        cta: "¿Quieres que te avisemos cuando lancemos?",
+        footer: "Este nombre de dominio está reservado para el proyecto Shuttleboard.io."
+      },
+      da: {
+        title: "Shuttleboard.io kommer snart.",
+        subtitle:
+          "At organisere, dømme og følge dine badmintonkampe har aldrig været nemmere.",
+        intro:
+          "Shuttleboard.io bliver en platform til klubber og turneringsarrangører:",
+        features: [
+          "oprettelse og styring af turneringer,",
+          "live-overvågning af kampe,",
+          "en smidig oplevelse for spillere, dommere og arrangører."
+        ],
+        cta: "Vil du have besked, når vi lancerer?",
+        footer: "Dette domænenavn er reserveret til Shuttleboard.io-projektet."
+      },
+      zh: {
+        title: "Shuttleboard.io 即将上线。",
+        subtitle: "组织、裁判并跟踪羽毛球比赛，从未如此轻松。",
+        intro: "Shuttleboard.io 将为俱乐部和赛事组织者提供一站式平台：",
+        features: [
+          "创建和管理羽毛球赛事，",
+          "实时跟踪比赛进程，",
+          "为球员、裁判和组织者提供流畅体验。"
+        ],
+        cta: "想在我们上线时收到通知吗？",
+        footer: "该域名已为 Shuttleboard.io 项目预留。"
+      },
+      id: {
+        title: "Shuttleboard.io akan segera hadir.",
+        subtitle:
+          "Mengatur, memimpin, dan memantau pertandingan bulu tangkis tidak pernah semudah ini.",
+        intro:
+          "Shuttleboard.io adalah platform yang akan hadir untuk klub dan penyelenggara turnamen:",
+        features: [
+          "membuat dan mengelola turnamen,",
+          "memantau pertandingan secara real time,",
+          "pengalaman yang mulus bagi pemain, wasit, dan panitia."
+        ],
+        cta: "Ingin diberi tahu saat kami diluncurkan?",
+        footer: "Nama domain ini telah dicadangkan untuk proyek Shuttleboard.io."
+      },
+      vi: {
+        title: "Shuttleboard.io sắp ra mắt.",
+        subtitle:
+          "Tổ chức, điều hành và theo dõi các trận cầu lông của bạn chưa bao giờ dễ dàng đến thế.",
+        intro:
+          "Shuttleboard.io sẽ là nền tảng dành cho các câu lạc bộ và đơn vị tổ chức giải đấu:",
+        features: [
+          "tạo và quản lý giải đấu,",
+          "theo dõi trận đấu theo thời gian thực,",
+          "mang lại trải nghiệm mượt mà cho người chơi, trọng tài và ban tổ chức."
+        ],
+        cta: "Bạn muốn được thông báo khi ra mắt?",
+        footer: "Tên miền này được dành riêng cho dự án Shuttleboard.io."
+      },
+      ko: {
+        title: "Shuttleboard.io가 곧 출시됩니다.",
+        subtitle:
+          "배드민턴 경기를 조직하고, 심판하고, 추적하는 일이 그 어느 때보다 쉬워집니다.",
+        intro:
+          "Shuttleboard.io는 클럽과 토너먼트 주최자를 위한 플랫폼입니다:",
+        features: [
+          "토너먼트 생성 및 관리,",
+          "실시간 경기 진행 상황 확인,",
+          "선수, 심판, 주최자를 위한 매끄러운 경험."
+        ],
+        cta: "출시 소식을 받고 싶으신가요?",
+        footer: "이 도메인 이름은 Shuttleboard.io 프로젝트를 위해 예약되어 있습니다."
+      },
+      ja: {
+        title: "Shuttleboard.io はまもなく公開予定です。",
+        subtitle:
+          "バドミントンの試合を「運営・審判・観戦」することが、これまでになく簡単になります。",
+        intro:
+          "Shuttleboard.io は、クラブや大会主催者のための新しいプラットフォームです。",
+        features: [
+          "大会の作成と管理、",
+          "試合のリアルタイム追跡、",
+          "選手・審判・主催者にとって快適な体験。"
+        ],
+        cta: "リリース情報を受け取りたい方はご連絡ください。",
+        footer: "このドメイン名は Shuttleboard.io プロジェクトのために確保されています."
+      },
+      hi: {
+        title: "Shuttleboard.io जल्द ही आ रहा है।",
+        subtitle:
+          "बैडमिंटन मैचों को आयोजित करना, रेफरी करना और ट्रैक करना अब पहले से कहीं आसान होगा।",
+        intro:
+          "Shuttleboard.io क्लबों और टूर्नामेंट आयोजकों के लिए एक नया प्लेटफ़ॉर्म होगा:",
+        features: [
+          "टूर्नामेंट बनाना और प्रबंधन करना,",
+          "मैचों को रियल टाइम में ट्रैक करना,",
+          "खिलाड़ियों, रेफरियों और आयोजकों के लिए सहज अनुभव।"
+        ],
+        cta: "क्या आप लॉन्च की जानकारी प्राप्त करना चाहते हैं?",
+        footer: "यह डोमेन नाम Shuttleboard.io प्रोजेक्ट के लिए सुरक्षित रखा गया है।"
+      },
+      ta: {
+        title: "Shuttleboard.io விரைவில் வருகிறது.",
+        subtitle:
+          "உங்கள் பேட்மிண்டன் போட்டிகளை அமைக்கவும், நடுவராக செயல்படவும், கண்காணிக்கவும் இதுவரை இல்லாத அளவு எளிதாக இருக்கும்.",
+        intro:
+          "Shuttleboard.io என்பது கழகங்கள் மற்றும் தொடர் போட்டி அமைப்பாளர்களுக்கான தளமாக உருவாக்கப்படுகிறது:",
+        features: [
+          "போட்டிகளை உருவாக்கி நிர்வகித்தல்,",
+          "போட்டித் தகவலை உடனுக்குடன் (real time) பார்க்குதல்,",
+          "ஆட்டக்காரர், நடுவர் மற்றும் அமைப்பாளர்களுக்கு சீரான அனுபவம்."
+        ],
+        cta: "நாங்கள் தொடங்கும் போது தகவல் பெற விரும்புகிறீர்களா?",
+        footer: "இந்த டொமைன் பெயர் Shuttleboard.io திட்டத்துக்காக ஒதுக்கப்பட்டுள்ளது."
+      }
+    };
+
+    const langSelect = document.getElementById("lang");
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+    const introEl = document.getElementById("intro");
+    const featuresEl = document.getElementById("features");
+    const ctaEl = document.getElementById("cta");
+    const footerEl = document.getElementById("footer");
+
+    function applyTranslations(lang) {
+      const t = translations[lang] || translations.fr;
+      titleEl.textContent = t.title;
+      subtitleEl.textContent = t.subtitle;
+      introEl.textContent = t.intro;
+      ctaEl.textContent = t.cta;
+      footerEl.textContent = t.footer;
+
+      // Replace feature list
+      featuresEl.innerHTML = "";
+      t.features.forEach((line) => {
+        const li = document.createElement("li");
+        li.textContent = line;
+        featuresEl.appendChild(li);
+      });
+    }
+
+    // Auto language from browser if available
+    (function initLang() {
+      const browserLang = (navigator.language || "fr").slice(0, 2).toLowerCase();
+      if (translations[browserLang]) {
+        langSelect.value = browserLang;
+      } else {
+        langSelect.value = "fr";
+      }
+      applyTranslations(langSelect.value);
+    })();
+
+    langSelect.addEventListener("change", () => {
+      applyTranslations(langSelect.value);
+    });
+  </script>
+</body>
+</html>
