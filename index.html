@@ -106,7 +106,7 @@
         justify-content: center;
         padding: 16px;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: hidden; /* plus de scroll vertical */
         word-wrap: break-word;
       }
 
@@ -215,14 +215,28 @@
         opacity: 0.9;
       }
 
+      /* Liste plus lisible */
       ul {
         list-style: none;
-        margin: 8px 0;
+        margin: 12px 0;
+        padding: 0;
+        max-width: 100%;
+        text-align: left; /* alignement à gauche */
+      }
+
+      ul li {
+        position: relative;
+        padding-left: 1.2rem; /* espace pour la puce */
+        margin: 4px 0; /* espacement entre les items */
       }
 
       ul li::before {
-        content: "• ";
-        margin-right: 4px;
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: 0;
+        line-height: 1.2;
+        color: rgba(255, 255, 255, 0.9);
       }
 
       .cta {
@@ -267,7 +281,6 @@
       #typewriter {
         display: inline;
         font-weight: 600;
-        /* on laisse le navigateur gérer les retours à la ligne naturels */
         white-space: normal;
         word-break: break-word;
       }
@@ -325,8 +338,7 @@
           <span id="intro-prefix"
             >Shuttleboard.io est une future plateforme dédiée aux
           </span>
-          <span id="typewriter"></span
-          ><span id="intro-suffix"> du badminton :</span>
+          <span id="typewriter"></span><span id="intro-suffix"></span>
         </p>
 
         <ul id="features">
@@ -822,7 +834,6 @@
       const titleEl = document.getElementById("title");
       const subtitleEl = document.getElementById("subtitle");
       const introPrefixEl = document.getElementById("intro-prefix");
-      const introSuffixEl = document.getElementById("intro-suffix");
       const typewriterEl = document.getElementById("typewriter");
       const featuresEl = document.getElementById("features");
       const ctaEl = document.getElementById("cta");
@@ -900,7 +911,6 @@
         titleEl.textContent = t.title;
         subtitleEl.textContent = t.subtitle;
         introPrefixEl.textContent = t.introPrefix || "";
-        introSuffixEl.textContent = t.introSuffix || "";
         ctaEl.textContent = t.cta;
         footerEl.textContent = t.footer;
 
